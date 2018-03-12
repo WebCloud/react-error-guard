@@ -3,17 +3,14 @@
   "version": "0.1.0",
   "main": "lib/index.js",
   "license": "MIT",
-  "description": "An overlay for displaying stack frames.",
+  "description": "An overlay for displaying stack frames based on create-react-app/packages/react-error-overlay",
   "scripts": {
-    "start": "cross-env NODE_ENV=development node build.js --watch",
     "prettier": "node scripts/prettier write-changed",
-    "test": "cross-env NODE_ENV=test jest",
-    "build": "cross-env NODE_ENV=development node build.js",
-    "build:prod": "cross-env NODE_ENV=production node build.js"
+    "build": "rm -rf lib/* && NODE_ENV=production BABEL_ENV=production babel src/ --copy-files --out-dir lib/ --ignore '.*(spec).js'"
   },
-  "repository": "facebook/create-react-app",
+  "repository": "WebCloud/react-error-reporter",
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/WebCloud/react-error-reporter/issues"
   },
   "keywords": [
     "overlay",
@@ -34,6 +31,7 @@
     "@babel/core": "7.0.0-beta.38",
     "@babel/runtime": "7.0.0-beta.38",
     "anser": "1.4.6",
+    "babel-cli": "^6.26.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.0.2",
     "babel-jest": "^22.1.0",
@@ -44,7 +42,6 @@
     "cross-env": "5.1.3",
     "eslint": "4.15.0",
     "eslint-config-react-app": "^2.1.0",
-    "eslint-plugin-flowtype": "2.41.0",
     "eslint-plugin-import": "2.8.0",
     "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "7.5.1",
