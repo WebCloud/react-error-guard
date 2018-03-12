@@ -6,7 +6,7 @@
  */
 
 /*       */
-import { ScriptLine } from './stack-frame';
+import {ScriptLine} from './stack-frame';
 
 /**
  *
@@ -14,11 +14,7 @@ import { ScriptLine } from './stack-frame';
  * @param {number} count The number of lines you'd like for context.
  * @param {string[] | string} lines The source code.
  */
-function getLinesAround(
-  line        ,
-  count        ,
-  lines                   
-)               {
+function getLinesAround(line, count, lines) {
   if (typeof lines === 'string') {
     lines = lines.split('\n');
   }
@@ -33,5 +29,5 @@ function getLinesAround(
   return result;
 }
 
-export { getLinesAround };
+export {getLinesAround};
 export default getLinesAround;

@@ -7,7 +7,7 @@
 
 /*       */
 import React from 'react';
-import { red } from '../styles';
+import {red} from '../styles';
 
 const headerStyle = {
   fontSize: '2em',
@@ -22,11 +22,7 @@ const headerStyle = {
   overflow: 'auto',
 };
 
-                        
-                     
-   
-
-function Header(props                ) {
+function Header(props) {
   return <div style={headerStyle}>{props.headerText}</div>;
 }
 

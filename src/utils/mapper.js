@@ -7,23 +7,20 @@
 
 /*       */
 import StackFrame from './stack-frame';
-import { getSourceMap } from './getSourceMap';
-import { getLinesAround } from './getLinesAround';
-import { settle } from 'settle-promise';
+import {getSourceMap} from './getSourceMap';
+import {getLinesAround} from './getLinesAround';
+import {settle} from 'settle-promise';
 
 /**
  * Enhances a set of <code>StackFrame</code>s with their original positions and code (when available).
  * @param {StackFrame[]} frames A set of <code>StackFrame</code>s which contain (generated) code positions.
  * @param {number} [contextLines=3] The number of lines to provide before and after the line specified in the <code>StackFrame</code>.
  */
-async function map(
-  frames              ,
-  contextLines         = 3
-)                        {
-  const cache      = {};
-  const files           = [];
+async function map(frames, contextLines = 3) {
+  const cache = {};
+  const files = [];
   frames.forEach(frame => {
-    const { fileName } = frame;
+    const {fileName} = frame;
     if (fileName == null) {
       return;
     }
@@ -36,16 +33,16 @@ async function map(
     files.map(async fileName => {
       const fileSource = await fetch(fileName).then(r => r.text());
       const map = await getSourceMap(fileName, fileSource);
-      cache[fileName] = { fileSource, map };
+      cache[fileName] = {fileSource, map};
     })
   );
   return frames.map(frame => {
-    const { functionName, fileName, lineNumber, columnNumber } = frame;
-    let { map, fileSource } = cache[fileName] || {};
+    const {functionName, fileName, lineNumber, columnNumber} = frame;
+    let {map, fileSource} = cache[fileName] || {};
     if (map == null || lineNumber == null) {
       return frame;
     }
-    const { source, line, column } = map.getOriginalPosition(
+    const {source, line, column} = map.getOriginalPosition(
       lineNumber,
       columnNumber
     );
@@ -65,5 +62,5 @@ async function map(
   });
 }
 
-export { map };
+export {map};
 export default map;

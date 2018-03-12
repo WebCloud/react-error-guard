@@ -10,13 +10,12 @@
 /** A container holding a script line. */
 class ScriptLine {
   /** The line number of this line of source. */
-                     
-  /** The content (or value) of this line of source. */
-                  
-  /** Whether or not this line should be highlighted. Particularly useful for error reporting with context. */
-                     
 
-  constructor(lineNumber        , content        , highlight          = false) {
+  /** The content (or value) of this line of source. */
+
+  /** Whether or not this line should be highlighted. Particularly useful for error reporting with context. */
+
+  constructor(lineNumber, content, highlight = false) {
     this.lineNumber = lineNumber;
     this.content = content;
     this.highlight = highlight;
@@ -27,30 +26,17 @@ class ScriptLine {
  * A representation of a stack frame.
  */
 class StackFrame {
-                              
-                          
-                            
-                              
-
-                                       
-                                   
-                                     
-                                       
-
-                                   
-                                           
-
   constructor(
-    functionName                = null,
-    fileName                = null,
-    lineNumber                = null,
-    columnNumber                = null,
-    scriptCode                      = null,
-    sourceFunctionName                = null,
-    sourceFileName                = null,
-    sourceLineNumber                = null,
-    sourceColumnNumber                = null,
-    sourceScriptCode                      = null
+    functionName = null,
+    fileName = null,
+    lineNumber = null,
+    columnNumber = null,
+    scriptCode = null,
+    sourceFunctionName = null,
+    sourceFileName = null,
+    sourceLineNumber = null,
+    sourceColumnNumber = null,
+    sourceScriptCode = null
   ) {
     if (functionName && functionName.indexOf('Object.') === 0) {
       functionName = functionName.slice('Object.'.length);
@@ -84,7 +70,7 @@ class StackFrame {
   /**
    * Returns the name of this function.
    */
-  getFunctionName()         {
+  getFunctionName() {
     return this.functionName || '(anonymous function)';
   }
 
@@ -92,7 +78,7 @@ class StackFrame {
    * Returns the source of the frame.
    * This contains the file name, line number, and column number when available.
    */
-  getSource()         {
+  getSource() {
     let str = '';
     if (this.fileName != null) {
       str += this.fileName + ':';
@@ -109,12 +95,12 @@ class StackFrame {
   /**
    * Returns a pretty version of this stack frame.
    */
-  toString()         {
+  toString() {
     const functionName = this.getFunctionName();
     const source = this.getSource();
     return `${functionName}${source ? ` (${source})` : ``}`;
   }
 }
 
-export { StackFrame, ScriptLine };
+export {StackFrame, ScriptLine};
 export default StackFrame;

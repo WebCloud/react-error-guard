@@ -6,13 +6,10 @@
  */
 
 /*       */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import CodeBlock from './StackFrameCodeBlock';
-import { getPrettyURL } from '../utils/getPrettyURL';
-import { darkGray } from '../styles';
-
-                                                                         
-                                                                
+import {getPrettyURL} from '../utils/getPrettyURL';
+import {darkGray} from '../styles';
 
 const linkStyle = {
   fontSize: '0.9em',
@@ -44,19 +41,7 @@ const toggleStyle = {
   lineHeight: '1.5',
 };
 
-               
-                        
-                      
-                    
-                    
-                                                   
-   
-
-               
-                    
-   
-
-class StackFrame extends Component               {
+class StackFrame extends Component {
   state = {
     compiled: false,
   };
@@ -67,7 +52,7 @@ class StackFrame extends Component               {
     }));
   };
 
-  getErrorLocation()                       {
+  getErrorLocation() {
     const {
       _originalFileName: fileName,
       _originalLineNumber: lineNumber,
@@ -82,7 +67,7 @@ class StackFrame extends Component               {
       return null;
     }
     // Code is in a real file
-    return { fileName, lineNumber: lineNumber || 1 };
+    return {fileName, lineNumber: lineNumber || 1};
   }
 
   editorHandler = () => {
@@ -93,14 +78,14 @@ class StackFrame extends Component               {
     this.props.editorHandler(errorLoc);
   };
 
-  onKeyDown = (e                          ) => {
+  onKeyDown = e => {
     if (e.key === 'Enter') {
       this.editorHandler();
     }
   };
 
   render() {
-    const { frame, contextSize, critical, showCode } = this.props;
+    const {frame, contextSize, critical, showCode} = this.props;
     const {
       fileName,
       lineNumber,
@@ -165,8 +150,7 @@ class StackFrame extends Component               {
             style={canOpenInEditor ? anchorStyle : null}
             onClick={canOpenInEditor ? this.editorHandler : null}
             onKeyDown={canOpenInEditor ? this.onKeyDown : null}
-            tabIndex={canOpenInEditor ? '0' : null}
-          >
+            tabIndex={canOpenInEditor ? '0' : null}>
             {url}
           </span>
         </div>
@@ -174,8 +158,7 @@ class StackFrame extends Component               {
           <span>
             <span
               onClick={canOpenInEditor ? this.editorHandler : null}
-              style={canOpenInEditor ? codeAnchorStyle : null}
-            >
+              style={canOpenInEditor ? codeAnchorStyle : null}>
               <CodeBlock {...codeBlockProps} />
             </span>
             <button style={toggleStyle} onClick={this.toggleCompiled}>

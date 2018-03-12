@@ -7,7 +7,7 @@
 
 /*       */
 import React from 'react';
-import { redTransparent, yellowTransparent } from '../styles';
+import {redTransparent, yellowTransparent} from '../styles';
 
 const _preStyle = {
   display: 'block',
@@ -33,14 +33,9 @@ const codeStyle = {
   fontFamily: 'Consolas, Menlo, monospace',
 };
 
-                            
-                
-                   
-   
-
-function CodeBlock(props                    ) {
+function CodeBlock(props) {
   const preStyle = props.main ? primaryPreStyle : secondaryPreStyle;
-  const codeBlock = { __html: props.codeHTML };
+  const codeBlock = {__html: props.codeHTML};
 
   return (
     <pre style={preStyle}>

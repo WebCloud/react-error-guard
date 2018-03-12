@@ -6,7 +6,7 @@
  */
 
 /*       */
-import { SourceMapConsumer } from 'source-map';
+import {SourceMapConsumer} from 'source-map';
 
 /**
  * A wrapped instance of a <code>{@link https://github.com/mozilla/source-map SourceMapConsumer}</code>.
@@ -14,8 +14,6 @@ import { SourceMapConsumer } from 'source-map';
  * This exposes methods which will be indifferent to changes made in <code>{@link https://github.com/mozilla/source-map source-map}</code>.
  */
 class SourceMap {
-                                  
-
   constructor(sourceMap) {
     this.__source_map = sourceMap;
   }
@@ -25,10 +23,7 @@ class SourceMap {
    * @param {number} line The line of the generated code position.
    * @param {number} column The column of the generated code position.
    */
-  getOriginalPosition(
-    line        ,
-    column        
-  )                                                   {
+  getOriginalPosition(line, column) {
     const {
       line: l,
       column: c,
@@ -37,7 +32,7 @@ class SourceMap {
       line,
       column,
     });
-    return { line: l, column: c, source: s };
+    return {line: l, column: c, source: s};
   }
 
   /**
@@ -46,12 +41,8 @@ class SourceMap {
    * @param {number} line The line of the original code position.
    * @param {number} column The column of the original code position.
    */
-  getGeneratedPosition(
-    source        ,
-    line        ,
-    column        
-  )                                   {
-    const { line: l, column: c } = this.__source_map.generatedPositionFor({
+  getGeneratedPosition(source, line, column) {
+    const {line: l, column: c} = this.__source_map.generatedPositionFor({
       source,
       line,
       column,
@@ -66,19 +57,16 @@ class SourceMap {
    * Returns the code for a given source file name.
    * @param {string} sourceName The name of the source file.
    */
-  getSource(sourceName        )         {
+  getSource(sourceName) {
     return this.__source_map.sourceContentFor(sourceName);
   }
 
-  getSources()           {
+  getSources() {
     return this.__source_map.sources;
   }
 }
 
-function extractSourceMapUrl(
-  fileUri        ,
-  fileContents        
-)                  {
+function extractSourceMapUrl(fileUri, fileContents) {
   const regex = /\/\/[#@] ?sourceMappingURL=([^\s'"]+)\s*$/gm;
   let match = null;
   for (;;) {
@@ -99,10 +87,7 @@ function extractSourceMapUrl(
  * @param {string} fileUri The URI of the source file.
  * @param {string} fileContents The contents of the source file.
  */
-async function getSourceMap(
-  fileUri        ,
-  fileContents        
-)                     {
+async function getSourceMap(fileUri, fileContents) {
   let sm = await extractSourceMapUrl(fileUri, fileContents);
   if (sm.indexOf('data:') === 0) {
     const base64 = /^data:application\/json;([\w=:"-]+;)*base64,/;
@@ -124,5 +109,5 @@ async function getSourceMap(
   }
 }
 
-export { extractSourceMapUrl, getSourceMap };
+export {extractSourceMapUrl, getSourceMap};
 export default getSourceMap;

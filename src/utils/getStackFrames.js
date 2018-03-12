@@ -6,16 +6,12 @@
  */
 
 /*       */
-                                                
-import { parse } from './parser';
-import { map } from './mapper';
-import { unmap } from './unmapper';
 
-function getStackFrames(
-  error       ,
-  unhandledRejection          = false,
-  contextSize         = 3
-)                               {
+import {parse} from './parser';
+import {map} from './mapper';
+import {unmap} from './unmapper';
+
+function getStackFrames(error, unhandledRejection = false, contextSize = 3) {
   const parsedFrames = parse(error);
   let enhancedFramesPromise;
   if (error.__unmap_source) {
@@ -37,7 +33,7 @@ function getStackFrames(
       return null;
     }
     return enhancedFrames.filter(
-      ({ functionName }) =>
+      ({functionName}) =>
         functionName == null ||
         functionName.indexOf('__stack_frame_overlay_proxy_console__') === -1
     );
@@ -45,4 +41,4 @@ function getStackFrames(
 }
 
 export default getStackFrames;
-export { getStackFrames };
+export {getStackFrames};

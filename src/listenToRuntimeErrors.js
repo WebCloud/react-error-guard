@@ -23,25 +23,16 @@ import {
   registerReactStack,
   unregisterReactStack,
 } from './effects/proxyConsole';
-import { massage as massageWarning } from './utils/warnings';
+import {massage as massageWarning} from './utils/warnings';
 import getStackFrames from './utils/getStackFrames';
 
-                                                      
-
-const CONTEXT_SIZE         = 3;
-
-                            
-               
-                              
-                      
-                            
-   
+const CONTEXT_SIZE = 3;
 
 export function listenToRuntimeErrors(
-  crash                     ,
-  filename         = '/static/js/bundle.js'
+  crash,
+  filename = '/static/js/bundle.js'
 ) {
-  function crashWithFrames(error       , unhandledRejection = false) {
+  function crashWithFrames(error, unhandledRejection = false) {
     getStackFrames(error, unhandledRejection, CONTEXT_SIZE)
       .then(stackFrames => {
         if (stackFrames == null) {

@@ -10,28 +10,13 @@ import React from 'react';
 import Header from '../components/Header';
 import StackTrace from './StackTrace';
 
-                                                       
-                                                                
-
 const wrapperStyle = {
   display: 'flex',
   flexDirection: 'column',
 };
 
-                            
-               
-                              
-                      
-                            
-   
-
-               
-                           
-                                                   
-   
-
-function RuntimeError({ errorRecord, editorHandler }       ) {
-  const { error, unhandledRejection, contextSize, stackFrames } = errorRecord;
+function RuntimeError({errorRecord, editorHandler}) {
+  const {error, unhandledRejection, contextSize, stackFrames} = errorRecord;
   const errorName = unhandledRejection
     ? 'Unhandled Rejection (' + error.name + ')'
     : error.name;

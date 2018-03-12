@@ -6,43 +6,33 @@
  */
 
 /*       */
-import { listenToRuntimeErrors } from './listenToRuntimeErrors';
-import { iframeStyle } from './styles';
-import { applyStyles } from './utils/dom/css';
+import {listenToRuntimeErrors} from './listenToRuntimeErrors';
+import {iframeStyle} from './styles';
+import {applyStyles} from './utils/dom/css';
 
 // Importing iframe-bundle generated in the pre build step as
 // a text using webpack raw-loader. See webpack.config.js file.
 // $FlowFixMe
 import iframeScript from 'iframeScript';
 
-                                                           
-                                                               
+let iframe = null;
+let isLoadingIframe = false;
+var isIframeReady = false;
 
-                                 
-                      
-                    
-   
+let editorHandler = null;
+let currentBuildError = null;
+let currentRuntimeErrorRecords = [];
+let currentRuntimeErrorOptions = null;
+let stopListeningToRuntimeErrors = null;
 
-                                                       
-
-let iframe                           = null;
-let isLoadingIframe          = false;
-var isIframeReady          = false;
-
-let editorHandler                       = null;
-let currentBuildError                = null;
-let currentRuntimeErrorRecords                     = [];
-let currentRuntimeErrorOptions                                 = null;
-let stopListeningToRuntimeErrors                      = null;
-
-export function setEditorHandler(handler                      ) {
+export function setEditorHandler(handler) {
   editorHandler = handler;
   if (iframe) {
     update();
   }
 }
 
-export function reportBuildError(error        ) {
+export function reportBuildError(error) {
   currentBuildError = error;
   update();
 }
@@ -52,7 +42,7 @@ export function dismissBuildError() {
   update();
 }
 
-export function startReportingRuntimeErrors(options                         ) {
+export function startReportingRuntimeErrors(options) {
   if (stopListeningToRuntimeErrors !== null) {
     throw new Error('Already listening');
   }
@@ -77,7 +67,7 @@ export function startReportingRuntimeErrors(options                         ) {
 
 function handleRuntimeError(errorRecord) {
   if (
-    currentRuntimeErrorRecords.some(({ error }) => error === errorRecord.error)
+    currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)
   ) {
     // Deduplicate identical errors.
     // This fixes https://github.com/facebook/create-react-app/issues/3011.

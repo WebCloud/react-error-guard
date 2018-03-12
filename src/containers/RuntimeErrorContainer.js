@@ -6,27 +6,14 @@
  */
 
 /*       */
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import ErrorOverlay from '../components/ErrorOverlay';
 import CloseButton from '../components/CloseButton';
 import NavigationBar from '../components/NavigationBar';
 import RuntimeError from './RuntimeError';
 import Footer from '../components/Footer';
 
-                                                  
-                                                                
-
-               
-                              
-                    
-                                                   
-   
-
-               
-                       
-   
-
-class RuntimeErrorContainer extends PureComponent               {
+class RuntimeErrorContainer extends PureComponent {
   state = {
     currentIndex: 0,
   };
@@ -49,7 +36,7 @@ class RuntimeErrorContainer extends PureComponent               {
     }));
   };
 
-  shortcutHandler = (key        ) => {
+  shortcutHandler = key => {
     if (key === 'Escape') {
       this.props.close();
     } else if (key === 'ArrowLeft') {
@@ -60,7 +47,7 @@ class RuntimeErrorContainer extends PureComponent               {
   };
 
   render() {
-    const { errorRecords, close } = this.props;
+    const {errorRecords, close} = this.props;
     const totalErrors = errorRecords.length;
     return (
       <ErrorOverlay shortcutHandler={this.shortcutHandler}>

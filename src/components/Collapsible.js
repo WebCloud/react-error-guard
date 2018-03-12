@@ -6,10 +6,8 @@
  */
 
 /*       */
-import React, { Component } from 'react';
-import { black } from '../styles';
-
-                                                     
+import React, {Component} from 'react';
+import {black} from '../styles';
 
 const _collapsibleStyle = {
   color: black,
@@ -35,15 +33,7 @@ const collapsibleExpandedStyle = {
   marginBottom: '0.6em',
 };
 
-               
-                                
-   
-
-               
-                     
-   
-
-class Collapsible extends Component               {
+class Collapsible extends Component {
   state = {
     collapsed: true,
   };
@@ -63,18 +53,16 @@ class Collapsible extends Component               {
           onClick={this.toggleCollaped}
           style={
             collapsed ? collapsibleCollapsedStyle : collapsibleExpandedStyle
-          }
-        >
+          }>
           {(collapsed ? '▶' : '▼') +
             ` ${count} stack frames were ` +
             (collapsed ? 'collapsed.' : 'expanded.')}
         </button>
-        <div style={{ display: collapsed ? 'none' : 'block' }}>
+        <div style={{display: collapsed ? 'none' : 'block'}}>
           {this.props.children}
           <button
             onClick={this.toggleCollaped}
-            style={collapsibleExpandedStyle}
-          >
+            style={collapsibleExpandedStyle}>
             {`▲ ${count} stack frames were expanded.`}
           </button>
         </div>

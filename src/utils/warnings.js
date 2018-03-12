@@ -6,19 +6,15 @@
  */
 
 /*       */
-                                                          
 
-function stripInlineStacktrace(message        )         {
+function stripInlineStacktrace(message) {
   return message
     .split('\n')
     .filter(line => !line.match(/^\s*in/))
     .join('\n'); // "  in Foo"
 }
 
-function massage(
-  warning        ,
-  frames              
-)                                     {
+function massage(warning, frames) {
   let message = stripInlineStacktrace(warning);
 
   // Reassemble the stack with full filenames provided by React
@@ -26,7 +22,7 @@ function massage(
   let lastFilename;
   let lastLineNumber;
   for (let index = 0; index < frames.length; ++index) {
-    const { fileName, lineNumber } = frames[index];
+    const {fileName, lineNumber} = frames[index];
     if (fileName == null || lineNumber == null) {
       continue;
     }
@@ -43,12 +39,12 @@ function massage(
     lastFilename = fileName;
     lastLineNumber = lineNumber;
 
-    let { name } = frames[index];
+    let {name} = frames[index];
     name = name || '(anonymous function)';
     stack += `in ${name} (at ${fileName}:${lineNumber})\n`;
   }
 
-  return { message, stack };
+  return {message, stack};
 }
 
-export { massage };
+export {massage};

@@ -7,14 +7,7 @@
 
 /*       */
 
-                   
-                          
-                            
-                      
-  
-const reactFrameStack                      = [];
-
-                           
+const reactFrameStack = [];
 
 // This is a stripped down barebones version of this proposal:
 // https://gist.github.com/sebmarkbage/bdefa100f19345229d526d0fdd22830f
@@ -41,11 +34,7 @@ const unregisterReactStack = () => {
   }
 };
 
-                                                                            
-const permanentRegister = function proxyConsole(
-  type        ,
-  callback                      
-) {
+const permanentRegister = function proxyConsole(type, callback) {
   if (typeof console !== 'undefined') {
     const orig = console[type];
     if (typeof orig === 'function') {
@@ -67,4 +56,4 @@ const permanentRegister = function proxyConsole(
   }
 };
 
-export { permanentRegister, registerReactStack, unregisterReactStack };
+export {permanentRegister, registerReactStack, unregisterReactStack};

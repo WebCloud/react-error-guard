@@ -8,14 +8,12 @@
 /*       */
 let boundErrorHandler = null;
 
-                                            
-
-function errorHandler(callback               , e       )       {
+function errorHandler(callback, e) {
   if (!e.error) {
     return;
   }
   // $FlowFixMe
-  const { error } = e;
+  const {error} = e;
   if (error instanceof Error) {
     callback(error);
   } else {
@@ -25,7 +23,7 @@ function errorHandler(callback               , e       )       {
   }
 }
 
-function registerUnhandledError(target             , callback               ) {
+function registerUnhandledError(target, callback) {
   if (boundErrorHandler !== null) {
     return;
   }
@@ -33,7 +31,7 @@ function registerUnhandledError(target             , callback               ) {
   target.addEventListener('error', boundErrorHandler);
 }
 
-function unregisterUnhandledError(target             ) {
+function unregisterUnhandledError(target) {
   if (boundErrorHandler === null) {
     return;
   }

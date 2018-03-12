@@ -7,14 +7,14 @@
 
 /*       */
 function getPrettyURL(
-  sourceFileName         ,
-  sourceLineNumber         ,
-  sourceColumnNumber         ,
-  fileName         ,
-  lineNumber         ,
-  columnNumber         ,
-  compiled         
-)         {
+  sourceFileName,
+  sourceLineNumber,
+  sourceColumnNumber,
+  fileName,
+  lineNumber,
+  columnNumber,
+  compiled
+) {
   let prettyURL;
   if (!compiled && sourceFileName && typeof sourceLineNumber === 'number') {
     // Remove everything up to the first /src/ or /node_modules/
@@ -43,5 +43,5 @@ function getPrettyURL(
   return prettyURL.replace('webpack://', '.');
 }
 
-export { getPrettyURL };
+export {getPrettyURL};
 export default getPrettyURL;

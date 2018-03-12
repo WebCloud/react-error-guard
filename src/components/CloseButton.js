@@ -7,7 +7,7 @@
 
 /*       */
 import React from 'react';
-import { black } from '../styles';
+import {black} from '../styles';
 
 const closeButtonStyle = {
   color: black,
@@ -20,14 +20,12 @@ const closeButtonStyle = {
   top: 0,
 };
 
-                                
-function CloseButton({ close }                            ) {
+function CloseButton({close}) {
   return (
     <span
       title="Click or press Escape to dismiss."
       onClick={close}
-      style={closeButtonStyle}
-    >
+      style={closeButtonStyle}>
       ×
     </span>
   );

@@ -6,7 +6,7 @@
  */
 
 /*       */
-function isBultinErrorName(errorName         ) {
+function isBultinErrorName(errorName) {
   switch (errorName) {
     case 'EvalError':
     case 'InternalError':
@@ -21,5 +21,5 @@ function isBultinErrorName(errorName         ) {
   }
 }
 
-export { isBultinErrorName };
+export {isBultinErrorName};
 export default isBultinErrorName;

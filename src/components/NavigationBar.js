@@ -7,7 +7,7 @@
 
 /*       */
 import React from 'react';
-import { red, redTransparent } from '../styles';
+import {red, redTransparent} from '../styles';
 
 const navigationBarStyle = {
   marginBottom: '0.5rem',
@@ -39,17 +39,8 @@ const rightButtonStyle = {
   borderBottomLeftRadius: '0px',
 };
 
-                           
-
-                                
-                       
-                      
-                     
-                 
-   
-
-function NavigationBar(props                        ) {
-  const { currentError, totalErrors, previous, next } = props;
+function NavigationBar(props) {
+  const {currentError, totalErrors, previous, next} = props;
   return (
     <div style={navigationBarStyle}>
       <span style={buttonContainerStyle}>

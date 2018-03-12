@@ -6,7 +6,7 @@
  */
 
 /*       */
-function removeNextBr(parent, component          ) {
+function removeNextBr(parent, component) {
   while (component != null && component.tagName.toLowerCase() !== 'br') {
     component = component.nextElementSibling;
   }
@@ -15,7 +15,7 @@ function removeNextBr(parent, component          ) {
   }
 }
 
-function absolutifyCaret(component      ) {
+function absolutifyCaret(component) {
   const ccn = component.childNodes;
   for (let index = 0; index < ccn.length; ++index) {
     const c = ccn[index];
@@ -38,4 +38,4 @@ function absolutifyCaret(component      ) {
   }
 }
 
-export { absolutifyCaret };
+export {absolutifyCaret};

@@ -6,28 +6,22 @@
  */
 
 /*       */
-import React, { PureComponent } from 'react';
+import React, {PureComponent} from 'react';
 import ErrorOverlay from '../components/ErrorOverlay';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import CodeBlock from '../components/CodeBlock';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 import parseCompileError from '../utils/parseCompileError';
-                                                                
 
 const codeAnchorStyle = {
   cursor: 'pointer',
 };
 
-               
-                
-                                                   
-   
-
-class CompileErrorContainer extends PureComponent              {
+class CompileErrorContainer extends PureComponent {
   render() {
-    const { error, editorHandler } = this.props;
-    const errLoc                 = parseCompileError(error);
+    const {error, editorHandler} = this.props;
+    const errLoc = parseCompileError(error);
     const canOpenInEditor = errLoc !== null && editorHandler !== null;
     return (
       <ErrorOverlay>
@@ -36,8 +30,7 @@ class CompileErrorContainer extends PureComponent              {
           onClick={
             canOpenInEditor && errLoc ? () => editorHandler(errLoc) : null
           }
-          style={canOpenInEditor ? codeAnchorStyle : null}
-        >
+          style={canOpenInEditor ? codeAnchorStyle : null}>
           <CodeBlock main={true} codeHTML={generateAnsiHTML(error)} />
         </div>
         <Footer line1="This error occurred during the build time and cannot be dismissed." />

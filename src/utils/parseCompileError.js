@@ -1,11 +1,5 @@
-//      
+//
 import Anser from 'anser';
-
-                              
-                   
-                     
-                     
-   
 
 const filePathRegex = /^\.(\/[^/\n ]+)+\.[^/\n ]+$/;
 
@@ -22,14 +16,14 @@ const lineNumberRegexes = [
 
 // Based on error formatting of webpack
 // https://github.com/webpack/webpack/blob/v3.5.5/lib/Stats.js#L183-L217
-function parseCompileError(message        )                 {
-  const lines                = message.split('\n');
-  let fileName         = '';
-  let lineNumber         = 0;
-  let colNumber         = 0;
+function parseCompileError(message) {
+  const lines = message.split('\n');
+  let fileName = '';
+  let lineNumber = 0;
+  let colNumber = 0;
 
   for (let i = 0; i < lines.length; i++) {
-    const line         = Anser.ansiToText(lines[i]).trim();
+    const line = Anser.ansiToText(lines[i]).trim();
     if (!line) {
       continue;
     }
@@ -40,7 +34,7 @@ function parseCompileError(message        )                 {
 
     let k = 0;
     while (k < lineNumberRegexes.length) {
-      const match                 = line.match(lineNumberRegexes[k]);
+      const match = line.match(lineNumberRegexes[k]);
       if (match) {
         lineNumber = parseInt(match[1], 10);
         // colNumber starts with 0 and hence add 1
@@ -55,7 +49,7 @@ function parseCompileError(message        )                 {
     }
   }
 
-  return fileName && lineNumber ? { fileName, lineNumber, colNumber } : null;
+  return fileName && lineNumber ? {fileName, lineNumber, colNumber} : null;
 }
 
 export default parseCompileError;

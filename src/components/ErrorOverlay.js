@@ -6,10 +6,8 @@
  */
 
 /*       */
-import React, { Component } from 'react';
-import { black } from '../styles';
-
-                                               
+import React, {Component} from 'react';
+import {black} from '../styles';
 
 const overlayStyle = {
   position: 'relative',
@@ -31,27 +29,18 @@ const overlayStyle = {
   color: black,
 };
 
-               
-                      
-                                               
-   
+class ErrorOverlay extends Component {
+  iframeWindow = null;
 
-               
-                     
-   
-
-class ErrorOverlay extends Component               {
-  iframeWindow         = null;
-
-  getIframeWindow = (element                 ) => {
+  getIframeWindow = element => {
     if (element) {
       const document = element.ownerDocument;
       this.iframeWindow = document.defaultView;
     }
   };
 
-  onKeyDown = (e               ) => {
-    const { shortcutHandler } = this.props;
+  onKeyDown = e => {
+    const {shortcutHandler} = this.props;
     if (shortcutHandler) {
       shortcutHandler(e.key);
     }

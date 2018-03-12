@@ -7,7 +7,7 @@
 
 /*       */
 import React from 'react';
-import { darkGray } from '../styles';
+import {darkGray} from '../styles';
 
 const footerStyle = {
   fontFamily: 'sans-serif',
@@ -16,12 +16,7 @@ const footerStyle = {
   flex: '0 0 auto',
 };
 
-                         
-                
-                 
-   
-
-function Footer(props                 ) {
+function Footer(props) {
   return (
     <div style={footerStyle}>
       {props.line1}

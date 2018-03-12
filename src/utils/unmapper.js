@@ -7,11 +7,11 @@
 
 /*       */
 import StackFrame from './stack-frame';
-import { getSourceMap } from './getSourceMap';
-import { getLinesAround } from './getLinesAround';
+import {getSourceMap} from './getSourceMap';
+import {getLinesAround} from './getLinesAround';
 import path from 'path';
 
-function count(search        , string        )         {
+function count(search, string) {
   // Count starts at -1 becuse a do-while loop always runs at least once
   let count = -1,
     index = -1;
@@ -31,11 +31,7 @@ function count(search        , string        )         {
  * @param {StackFrame[]} frames A set of <code>StackFrame</code>s which are already mapped and missing their generated positions.
  * @param {number} [fileContents=3] The number of lines to provide before and after the line specified in the <code>StackFrame</code>.
  */
-async function unmap(
-  _fileUri                                            ,
-  frames              ,
-  contextLines         = 3
-)                        {
+async function unmap(_fileUri, frames, contextLines = 3) {
   let fileContents = typeof _fileUri === 'object' ? _fileUri.contents : null;
   let fileUri = typeof _fileUri === 'object' ? _fileUri.uri : _fileUri;
   if (fileContents == null) {
@@ -43,16 +39,11 @@ async function unmap(
   }
   const map = await getSourceMap(fileUri, fileContents);
   return frames.map(frame => {
-    const {
-      functionName,
-      lineNumber,
-      columnNumber,
-      _originalLineNumber,
-    } = frame;
+    const {functionName, lineNumber, columnNumber, _originalLineNumber} = frame;
     if (_originalLineNumber != null) {
       return frame;
     }
-    let { fileName } = frame;
+    let {fileName} = frame;
     if (fileName) {
       // The web version of this module only provides POSIX support, so Windows
       // paths like C:\foo\\baz\..\\bar\ cannot be normalized.
@@ -63,7 +54,7 @@ async function unmap(
     if (fileName == null) {
       return frame;
     }
-    const fN         = fileName;
+    const fN = fileName;
     const source = map
       .getSources()
       // Prepare path for normalization; see comment above for reasoning.
@@ -100,7 +91,7 @@ async function unmap(
       );
     }
     const sourceT = source[0].token;
-    const { line, column } = map.getGeneratedPosition(
+    const {line, column} = map.getGeneratedPosition(
       sourceT,
       lineNumber,
       // $FlowFixMe
@@ -122,5 +113,5 @@ async function unmap(
   });
 }
 
-export { unmap };
+export {unmap};
 export default unmap;

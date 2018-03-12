@@ -8,16 +8,11 @@
 /*       */
 let boundRejectionHandler = null;
 
-                                            
-
-function rejectionHandler(
-  callback               ,
-  e                       
-)       {
+function rejectionHandler(callback, e) {
   if (e == null || e.reason == null) {
     return callback(new Error('Unknown'));
   }
-  let { reason } = e;
+  let {reason} = e;
   if (reason instanceof Error) {
     return callback(reason);
   }
@@ -26,10 +21,7 @@ function rejectionHandler(
   return callback(new Error(reason));
 }
 
-function registerUnhandledRejection(
-  target             ,
-  callback               
-) {
+function registerUnhandledRejection(target, callback) {
   if (boundRejectionHandler !== null) {
     return;
   }
@@ -38,7 +30,7 @@ function registerUnhandledRejection(
   target.addEventListener('unhandledrejection', boundRejectionHandler);
 }
 
-function unregisterUnhandledRejection(target             ) {
+function unregisterUnhandledRejection(target) {
   if (boundRejectionHandler === null) {
     return;
   }

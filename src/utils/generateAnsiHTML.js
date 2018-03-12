@@ -8,7 +8,7 @@
 /*       */
 
 import Anser from 'anser';
-import { AllHtmlEntities as Entities } from 'html-entities';
+import {AllHtmlEntities as Entities} from 'html-entities';
 
 var entities = new Entities();
 
@@ -61,7 +61,7 @@ var anserMap = {
   'ansi-white': 'darkgrey',
 };
 
-function generateAnsiHTML(txt        )         {
+function generateAnsiHTML(txt) {
   var arr = new Anser().ansiToJson(entities.encode(txt), {
     use_classes: true,
   });

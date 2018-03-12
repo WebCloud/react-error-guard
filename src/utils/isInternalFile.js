@@ -6,7 +6,7 @@
  */
 
 /*       */
-function isInternalFile(sourceFileName         , fileName         ) {
+function isInternalFile(sourceFileName, fileName) {
   return (
     sourceFileName == null ||
     sourceFileName === '' ||
@@ -18,4 +18,4 @@ function isInternalFile(sourceFileName         , fileName         ) {
   );
 }
 
-export { isInternalFile };
+export {isInternalFile};

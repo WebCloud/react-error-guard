@@ -9,11 +9,11 @@
 let injectedCount = 0;
 const injectedCache = {};
 
-function getHead(document          ) {
+function getHead(document) {
   return document.head || document.getElementsByTagName('head')[0];
 }
 
-function injectCss(document          , css        )         {
+function injectCss(document, css) {
   const head = getHead(document);
   const style = document.createElement('style');
   style.type = 'text/css';
@@ -24,7 +24,7 @@ function injectCss(document          , css        )         {
   return injectedCount;
 }
 
-function removeCss(document          , ref        ) {
+function removeCss(document, ref) {
   if (injectedCache[ref] == null) {
     return;
   }
@@ -33,7 +33,7 @@ function removeCss(document          , ref        ) {
   delete injectedCache[ref];
 }
 
-function applyStyles(element             , styles        ) {
+function applyStyles(element, styles) {
   element.setAttribute('style', '');
   for (const key in styles) {
     if (!styles.hasOwnProperty(key)) {
@@ -44,4 +44,4 @@ function applyStyles(element             , styles        ) {
   }
 }
 
-export { getHead, injectCss, removeCss, applyStyles };
+export {getHead, injectCss, removeCss, applyStyles};

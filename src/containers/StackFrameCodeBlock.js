@@ -8,32 +8,23 @@
 /*       */
 import React from 'react';
 import CodeBlock from '../components/CodeBlock';
-import { applyStyles } from '../utils/dom/css';
-import { absolutifyCaret } from '../utils/dom/absolutifyCaret';
-                                                       
-import { primaryErrorStyle, secondaryErrorStyle } from '../styles';
+import {applyStyles} from '../utils/dom/css';
+import {absolutifyCaret} from '../utils/dom/absolutifyCaret';
+
+import {primaryErrorStyle, secondaryErrorStyle} from '../styles';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
-import { codeFrameColumns } from '@babel/code-frame';
-
-                                      
-                      
-                  
-                     
-                      
-                
-   
+import {codeFrameColumns} from '@babel/code-frame';
 
 // Exact type workaround for spread operator.
 // See: https://github.com/facebook/flow/issues/2405
-                          
 
-function StackFrameCodeBlock(props                                     ) {
-  const { lines, lineNum, columnNum, contextSize, main } = props;
+function StackFrameCodeBlock(props) {
+  const {lines, lineNum, columnNum, contextSize, main} = props;
   const sourceCode = [];
   let whiteSpace = Infinity;
   lines.forEach(function(e) {
-    const { content: text } = e;
+    const {content: text} = e;
     const m = text.match(/^\s*/);
     if (text === '') {
       return;
@@ -45,8 +36,8 @@ function StackFrameCodeBlock(props                                     ) {
     }
   });
   lines.forEach(function(e) {
-    let { content: text } = e;
-    const { lineNumber: line } = e;
+    let {content: text} = e;
+    const {lineNumber: line} = e;
 
     if (isFinite(whiteSpace)) {
       text = text.substring(whiteSpace);

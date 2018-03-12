@@ -6,13 +6,13 @@
  */
 
 /*       */
-let stackTraceRegistered          = false;
+let stackTraceRegistered = false;
 // Default: https://docs.microsoft.com/en-us/scripting/javascript/reference/stacktracelimit-property-error-javascript
-let restoreStackTraceValue         = 10;
+let restoreStackTraceValue = 10;
 
-const MAX_STACK_LENGTH         = 50;
+const MAX_STACK_LENGTH = 50;
 
-function registerStackTraceLimit(limit         = MAX_STACK_LENGTH) {
+function registerStackTraceLimit(limit = MAX_STACK_LENGTH) {
   if (stackTraceRegistered) {
     return;
   }

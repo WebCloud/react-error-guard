@@ -6,14 +6,11 @@
  */
 
 /*       */
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import StackFrame from './StackFrame';
 import Collapsible from '../components/Collapsible';
-import { isInternalFile } from '../utils/isInternalFile';
-import { isBultinErrorName } from '../utils/isBultinErrorName';
-
-                                                                         
-                                                                
+import {isInternalFile} from '../utils/isInternalFile';
+import {isBultinErrorName} from '../utils/isBultinErrorName';
 
 const traceStyle = {
   fontSize: '1em',
@@ -22,23 +19,16 @@ const traceStyle = {
   overflow: 'auto',
 };
 
-               
-                                
-                    
-                      
-                                                   
-   
-
-class StackTrace extends Component        {
+class StackTrace extends Component {
   renderFrames() {
-    const { stackFrames, errorName, contextSize, editorHandler } = this.props;
+    const {stackFrames, errorName, contextSize, editorHandler} = this.props;
     const renderedFrames = [];
     let hasReachedAppCode = false,
       currentBundle = [],
       bundleCount = 0;
 
     stackFrames.forEach((frame, index) => {
-      const { fileName, _originalFileName: sourceFileName } = frame;
+      const {fileName, _originalFileName: sourceFileName} = frame;
       const isInternalUrl = isInternalFile(sourceFileName, fileName);
       const isThrownIntentionally = !isBultinErrorName(errorName);
       const shouldCollapse =
