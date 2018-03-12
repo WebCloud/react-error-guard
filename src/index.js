@@ -1,20 +1,14 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/*       */
+import './utils/pollyfills.js';
 import {listenToRuntimeErrors} from './listenToRuntimeErrors';
-import {iframeStyle} from './styles';
 import {applyStyles} from './utils/dom/css';
+import ReactDOM from 'react-dom';
+import React from 'react';
+import CompileErrorContainer from './containers/CompileErrorContainer';
+import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
+import {overlayStyle, iframeStyle} from './styles';
 
-// Importing iframe-bundle generated in the pre build step as
-// a text using webpack raw-loader. See webpack.config.js file.
-// $FlowFixMe
-import iframeScript from 'iframeScript';
-
+let errorHandlerRoot = null;
+let errorHandlerReactRoot = null;
 let iframe = null;
 let isLoadingIframe = false;
 var isIframeReady = false;
@@ -46,13 +40,7 @@ export function startReportingRuntimeErrors(options) {
   if (stopListeningToRuntimeErrors !== null) {
     throw new Error('Already listening');
   }
-  if (options.launchEditorEndpoint) {
-    console.warn(
-      'Warning: `startReportingRuntimeErrors` doesn’t accept ' +
-        '`launchEditorEndpoint` argument anymore. Use `listenToOpenInEditor` ' +
-        'instead with your own implementation to open errors in editor '
-    );
-  }
+
   currentRuntimeErrorOptions = options;
   stopListeningToRuntimeErrors = listenToRuntimeErrors(errorRecord => {
     try {
@@ -95,72 +83,57 @@ export function stopReportingRuntimeErrors() {
 }
 
 function update() {
-  // Loading iframe can be either sync or async depending on the browser.
-  if (isLoadingIframe) {
-    // Iframe is loading.
-    // First render will happen soon--don't need to do anything.
-    return;
-  }
-  if (isIframeReady) {
-    // Iframe is ready.
-    // Just update it.
-    updateIframeContent();
-    return;
-  }
-  // We need to schedule the first render.
-  isLoadingIframe = true;
-  const loadingIframe = window.document.createElement('iframe');
-  applyStyles(loadingIframe, iframeStyle);
-  loadingIframe.onload = function() {
-    const iframeDocument = loadingIframe.contentDocument;
-    if (iframeDocument != null && iframeDocument.body != null) {
-      iframe = loadingIframe;
-      const script = loadingIframe.contentWindow.document.createElement(
-        'script'
-      );
-      script.type = 'text/javascript';
-      script.innerHTML = iframeScript;
-      iframeDocument.body.appendChild(script);
-    }
-  };
-  const appDocument = window.document;
-  appDocument.body.appendChild(loadingIframe);
+  updateIframeContent();
 }
 
 function updateIframeContent() {
-  if (!currentRuntimeErrorOptions) {
-    throw new Error('Expected options to be injected.');
-  }
+  let renderedElement = render();
 
-  if (!iframe) {
-    throw new Error('Iframe has not been created yet.');
+  if (renderedElement === null) {
+    ReactDOM.unmountComponentAtNode(errorHandlerReactRoot);
+    return false;
   }
-
-  const isRendered = iframe.contentWindow.updateContent({
-    currentBuildError,
-    currentRuntimeErrorRecords,
-    dismissRuntimeErrors,
-    editorHandler,
-  });
-
-  if (!isRendered) {
-    window.document.body.removeChild(iframe);
-    iframe = null;
-    isIframeReady = false;
-  }
+  // Update the overlay
+  ReactDOM.render(renderedElement, errorHandlerReactRoot);
 }
 
-window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__ =
-  window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__ || {};
-window.__REACT_ERROR_OVERLAY_GLOBAL_HOOK__.iframeReady = function iframeReady() {
-  isIframeReady = true;
-  isLoadingIframe = false;
-  updateIframeContent();
-};
+function render() {
+  if (errorHandlerReactRoot == null) {
+    errorHandlerReactRoot = document.createElement('div');
+    errorHandlerReactRoot.id = 'react-error-guard-root';
+    applyStyles(errorHandlerReactRoot, overlayStyle);
+    errorHandlerRoot.appendChild(errorHandlerReactRoot);
+  }
 
-if (process.env.NODE_ENV === 'production') {
-  console.warn(
-    'react-error-overlay is not meant for use in production. You should ' +
-      'ensure it is not included in your build to reduce bundle size.'
-  );
+  if (currentBuildError || currentRuntimeErrorRecords.length > 0) {
+    errorHandlerRoot.style.setProperty('display', 'block');
+    if (currentBuildError) {
+      return (
+        <CompileErrorContainer
+          error={currentBuildError}
+          editorHandler={editorHandler}
+        />
+      );
+    }
+    if (currentRuntimeErrorRecords.length > 0) {
+      return (
+        <RuntimeErrorContainer
+          errorRecords={currentRuntimeErrorRecords}
+          close={dismissRuntimeErrors}
+          editorHandler={editorHandler}
+        />
+      );
+    }
+  } else {
+    errorHandlerRoot.style.setProperty('display', 'none');
+  }
+
+  return null;
 }
+
+errorHandlerRoot = document.createElement('div');
+errorHandlerRoot.id = 'error-guard-root';
+errorHandlerRoot.style.display = 'none';
+applyStyles(errorHandlerRoot, iframeStyle);
+document.body.appendChild(errorHandlerRoot);
+updateIframeContent();
