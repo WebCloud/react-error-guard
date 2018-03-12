@@ -6,9 +6,9 @@ import React from 'react';
 import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 import {overlayStyle, iframeStyle} from './styles';
+import getStackFrames from './utils/getStackFrames';
 
 let editorHandler = null;
-let currentBuildError = null;
 let currentRuntimeErrorOptions = null;
 let stopListeningToRuntimeErrors = null;
 
@@ -47,6 +47,8 @@ function startReportingRuntimeErrors(options = {}) {
 }
 
 function handleRuntimeError(errorRecord) {
+  let { currentRuntimeErrorRecords } = this.state;
+
   if (
     currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)
   ) {
@@ -54,6 +56,7 @@ function handleRuntimeError(errorRecord) {
     // This fixes https://github.com/facebook/create-react-app/issues/3011.
     return;
   }
+
   currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
 
   this.setState({
@@ -83,7 +86,7 @@ function stopReportingRuntimeErrors() {
 
 const OuterWrapper = ({children}) => (
   <div style={iframeStyle}>
-    <div style={overlay}>{children}</div>
+    <div style={overlayStyle}>{children}</div>
   </div>
 );
 
@@ -92,14 +95,35 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
     super(...args);
 
     this.state = {
-      hasError: false
+      currentRuntimeErrorRecords: []
     };
 
     this.startReportingRuntimeErrors = startReportingRuntimeErrors.bind(this);
     this.handleRuntimeError = handleRuntimeError.bind(this);
     this.dismissRuntimeErrors = dismissRuntimeErrors.bind(this);
 
-    this.startReportingRuntimeErrors();
+    if (this.props.detachedTree) {
+      this.startReportingRuntimeErrors();
+    }
+  }
+
+  componentDidCatch(error, info) {
+    getStackFrames(error, false, 3)
+      .then(stackFrames => {
+        if (stackFrames == null) {
+          return;
+        }
+
+        this.handleRuntimeError({
+          error,
+          unhandledRejection: false,
+          contextSize: 3,
+          stackFrames,
+        });
+      })
+      .catch(e => {
+        console.log('Could not get the stack frames of error:', e);
+      });
   }
 
   componentWillUnmount() {
