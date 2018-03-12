@@ -15,7 +15,7 @@ function setEditorHandler(handler) {
 }
 
 function handleRuntimeError(errorRecord) {
-  let { currentRuntimeErrorRecords } = this.state;
+  let {currentRuntimeErrorRecords} = this.state;
 
   if (
     currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)
@@ -28,13 +28,13 @@ function handleRuntimeError(errorRecord) {
   currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
 
   this.setState({
-    currentRuntimeErrorRecords
+    currentRuntimeErrorRecords,
   });
 }
 
 function dismissRuntimeErrors() {
   this.setState({
-    currentRuntimeErrorRecords: []
+    currentRuntimeErrorRecords: [],
   });
 }
 
@@ -49,7 +49,7 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
     super(...args);
 
     this.state = {
-      currentRuntimeErrorRecords: []
+      currentRuntimeErrorRecords: [],
     };
 
     this.handleRuntimeError = handleRuntimeError.bind(this);
@@ -75,9 +75,12 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   }
 
   render() {
-    const { currentRuntimeErrorRecords, currentBuildError } = this.state;
+    const {currentRuntimeErrorRecords, currentBuildError} = this.state;
 
-    if (process.env.NODE_ENV !== 'production' && (currentBuildError || currentRuntimeErrorRecords.length > 0)) {
+    if (
+      process.env.NODE_ENV !== 'production' &&
+      (currentBuildError || currentRuntimeErrorRecords.length > 0)
+    ) {
       if (currentBuildError) {
         return (
           <OuterWrapper>
