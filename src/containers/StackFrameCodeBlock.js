@@ -80,7 +80,6 @@ function StackFrameCodeBlock(props) {
       if (text.indexOf(' ' + lineNum + ' |') === -1) {
         continue;
       }
-      // $FlowFixMe
       applyStyles(node, main ? primaryErrorStyle : secondaryErrorStyle);
       // eslint-disable-next-line
       break oLoop;

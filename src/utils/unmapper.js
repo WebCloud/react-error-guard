@@ -94,7 +94,6 @@ async function unmap(_fileUri, frames, contextLines = 3) {
     const {line, column} = map.getGeneratedPosition(
       sourceT,
       lineNumber,
-      // $FlowFixMe
       columnNumber
     );
     const originalSource = map.getSource(sourceT);

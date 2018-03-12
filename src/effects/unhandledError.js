@@ -12,7 +12,7 @@ function errorHandler(callback, e) {
   if (!e.error) {
     return;
   }
-  // $FlowFixMe
+
   const {error} = e;
   if (error instanceof Error) {
     callback(error);

@@ -26,7 +26,7 @@ function registerUnhandledRejection(target, callback) {
     return;
   }
   boundRejectionHandler = rejectionHandler.bind(undefined, callback);
-  // $FlowFixMe
+
   target.addEventListener('unhandledrejection', boundRejectionHandler);
 }
 
@@ -34,7 +34,7 @@ function unregisterUnhandledRejection(target) {
   if (boundRejectionHandler === null) {
     return;
   }
-  // $FlowFixMe
+
   target.removeEventListener('unhandledrejection', boundRejectionHandler);
   boundRejectionHandler = null;
 }

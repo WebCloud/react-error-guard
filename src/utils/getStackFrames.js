@@ -16,7 +16,6 @@ function getStackFrames(error, unhandledRejection = false, contextSize = 3) {
   let enhancedFramesPromise;
   if (error.__unmap_source) {
     enhancedFramesPromise = unmap(
-      // $FlowFixMe
       error.__unmap_source,
       parsedFrames,
       contextSize

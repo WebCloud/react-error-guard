@@ -39,7 +39,7 @@ function applyStyles(element, styles) {
     if (!styles.hasOwnProperty(key)) {
       continue;
     }
-    // $FlowFixMe
+
     element.style[key] = styles[key];
   }
 }

@@ -1,12 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/*       */
-
 const reactFrameStack = [];
 
 // This is a stripped down barebones version of this proposal:
@@ -18,18 +9,14 @@ const reactFrameStack = [];
 
 const registerReactStack = () => {
   if (typeof console !== 'undefined') {
-    // $FlowFixMe
     console.reactStack = frames => reactFrameStack.push(frames);
-    // $FlowFixMe
     console.reactStackEnd = frames => reactFrameStack.pop();
   }
 };
 
 const unregisterReactStack = () => {
   if (typeof console !== 'undefined') {
-    // $FlowFixMe
     console.reactStack = undefined;
-    // $FlowFixMe
     console.reactStackEnd = undefined;
   }
 };

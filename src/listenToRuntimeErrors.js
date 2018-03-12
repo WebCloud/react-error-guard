@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/*       */
 import {
   register as registerError,
   unregister as unregisterError,
@@ -56,7 +48,6 @@ export function listenToRuntimeErrors(
   permanentRegisterConsole('error', (warning, stack) => {
     const data = massageWarning(warning, stack);
     crashWithFrames(
-      // $FlowFixMe
       {
         message: data.message,
         stack: data.stack,
