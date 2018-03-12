@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/*       */
 const black = '#293238',
   darkGray = '#878e91',
   red = '#ce1126',
@@ -22,15 +14,15 @@ const iframeStyle = {
   width: '100%',
   height: '100%',
   border: 'none',
-  'z-index': 2147483647,
+  zIndex: 2147483647,
 };
 
 const overlayStyle = {
   width: '100%',
   height: '100%',
-  'box-sizing': 'border-box',
-  'text-align': 'center',
-  'background-color': white,
+  boxSizing: 'border-box',
+  textAlign: 'center',
+  backgroundColor: white,
 };
 
 const primaryErrorStyle = {

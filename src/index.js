@@ -7,36 +7,29 @@ import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 import {overlayStyle, iframeStyle} from './styles';
 
-let errorHandlerRoot = null;
-let errorHandlerReactRoot = null;
-let iframe = null;
-let isLoadingIframe = false;
-var isIframeReady = false;
-
 let editorHandler = null;
 let currentBuildError = null;
-let currentRuntimeErrorRecords = [];
 let currentRuntimeErrorOptions = null;
 let stopListeningToRuntimeErrors = null;
 
-export function setEditorHandler(handler) {
+function setEditorHandler(handler) {
   editorHandler = handler;
-  if (iframe) {
-    update();
-  }
+  // if (iframe) {
+  //   update();
+  // }
 }
 
-export function reportBuildError(error) {
-  currentBuildError = error;
-  update();
-}
+// function reportBuildError(error) {
+//   currentBuildError = error;
+//   update();
+// }
+//
+// function dismissBuildError() {
+//   currentBuildError = null;
+//   update();
+// }
 
-export function dismissBuildError() {
-  currentBuildError = null;
-  update();
-}
-
-export function startReportingRuntimeErrors(options) {
+function startReportingRuntimeErrors(options = {}) {
   if (stopListeningToRuntimeErrors !== null) {
     throw new Error('Already listening');
   }
@@ -48,7 +41,7 @@ export function startReportingRuntimeErrors(options) {
         options.onError.call(null);
       }
     } finally {
-      handleRuntimeError(errorRecord);
+      this.handleRuntimeError(errorRecord);
     }
   }, options.filename);
 }
@@ -62,19 +55,25 @@ function handleRuntimeError(errorRecord) {
     return;
   }
   currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
-  update();
+
+  this.setState({
+    currentRuntimeErrorRecords
+  });
 }
 
-export function dismissRuntimeErrors() {
-  currentRuntimeErrorRecords = [];
-  update();
+function dismissRuntimeErrors() {
+  this.setState({
+    currentRuntimeErrorRecords: []
+  });
 }
 
-export function stopReportingRuntimeErrors() {
+function stopReportingRuntimeErrors() {
   if (stopListeningToRuntimeErrors === null) {
     throw new Error('Not currently listening');
   }
+
   currentRuntimeErrorOptions = null;
+
   try {
     stopListeningToRuntimeErrors();
   } finally {
@@ -82,58 +81,57 @@ export function stopReportingRuntimeErrors() {
   }
 }
 
-function update() {
-  updateIframeContent();
-}
+const OuterWrapper = ({children}) => (
+  <div style={iframeStyle}>
+    <div style={overlay}>{children}</div>
+  </div>
+);
 
-function updateIframeContent() {
-  let renderedElement = render();
+export default class ErrorBoundaryComponent extends React.PureComponent {
+  constructor(...args) {
+    super(...args);
 
-  if (renderedElement === null) {
-    ReactDOM.unmountComponentAtNode(errorHandlerReactRoot);
-    return false;
-  }
-  // Update the overlay
-  ReactDOM.render(renderedElement, errorHandlerReactRoot);
-}
+    this.state = {
+      hasError: false
+    };
 
-function render() {
-  if (errorHandlerReactRoot == null) {
-    errorHandlerReactRoot = document.createElement('div');
-    errorHandlerReactRoot.id = 'react-error-guard-root';
-    applyStyles(errorHandlerReactRoot, overlayStyle);
-    errorHandlerRoot.appendChild(errorHandlerReactRoot);
+    this.startReportingRuntimeErrors = startReportingRuntimeErrors.bind(this);
+    this.handleRuntimeError = handleRuntimeError.bind(this);
+    this.dismissRuntimeErrors = dismissRuntimeErrors.bind(this);
+
+    this.startReportingRuntimeErrors();
   }
 
-  if (currentBuildError || currentRuntimeErrorRecords.length > 0) {
-    errorHandlerRoot.style.setProperty('display', 'block');
-    if (currentBuildError) {
-      return (
-        <CompileErrorContainer
-          error={currentBuildError}
-          editorHandler={editorHandler}
-        />
-      );
+  componentWillUnmount() {
+    stopReportingRuntimeErrors();
+  }
+
+  render() {
+    if (process.env.NODE_ENV !== 'production' && (currentBuildError || currentRuntimeErrorRecords.length > 0)) {
+      errorHandlerRoot.style.setProperty('display', 'block');
+      if (currentBuildError) {
+        return (
+          <OuterWrapper>
+            <CompileErrorContainer
+              error={currentBuildError}
+              editorHandler={editorHandler}
+            />
+          </OuterWrapper>
+        );
+      }
+      if (currentRuntimeErrorRecords.length > 0) {
+        return (
+          <OuterWrapper>
+            <RuntimeErrorContainer
+              errorRecords={this.state.currentRuntimeErrorRecords}
+              close={this.dismissRuntimeErrors}
+              editorHandler={editorHandler}
+            />
+          </OuterWrapper>
+        );
+      }
     }
-    if (currentRuntimeErrorRecords.length > 0) {
-      return (
-        <RuntimeErrorContainer
-          errorRecords={currentRuntimeErrorRecords}
-          close={dismissRuntimeErrors}
-          editorHandler={editorHandler}
-        />
-      );
-    }
-  } else {
-    errorHandlerRoot.style.setProperty('display', 'none');
+
+    return this.props.children;
   }
-
-  return null;
 }
-
-errorHandlerRoot = document.createElement('div');
-errorHandlerRoot.id = 'error-guard-root';
-errorHandlerRoot.style.display = 'none';
-applyStyles(errorHandlerRoot, iframeStyle);
-document.body.appendChild(errorHandlerRoot);
-updateIframeContent();
