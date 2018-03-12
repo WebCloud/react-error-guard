@@ -8,7 +8,7 @@
     "prettier": "node scripts/prettier",
     "prettier:all": "node scripts/prettier write",
     "build": "rm -rf lib/* && NODE_ENV=production BABEL_ENV=production babel src/ --copy-files --out-dir lib/ --ignore '.*(spec).js'",
-    "prepublishOnly": "yarn prettier && yarn build",
+    "prepublishOnly": "yarn prettier && yarn build"
   },
   "repository": "WebCloud/react-error-reporter",
   "bugs": {
