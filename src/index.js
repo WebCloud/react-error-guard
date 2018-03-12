@@ -31,7 +31,7 @@ function setEditorHandler(handler) {
 
 function startReportingRuntimeErrors(options = {}) {
   if (stopListeningToRuntimeErrors !== null) {
-    throw new Error('Already listening');
+    return; // components get reinstanciated.
   }
 
   currentRuntimeErrorOptions = options;
@@ -107,8 +107,9 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   }
 
   render() {
+    const { currentRuntimeErrorRecords, currentBuildError } = this.state;
+
     if (process.env.NODE_ENV !== 'production' && (currentBuildError || currentRuntimeErrorRecords.length > 0)) {
-      errorHandlerRoot.style.setProperty('display', 'block');
       if (currentBuildError) {
         return (
           <OuterWrapper>
@@ -123,7 +124,7 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
         return (
           <OuterWrapper>
             <RuntimeErrorContainer
-              errorRecords={this.state.currentRuntimeErrorRecords}
+              errorRecords={currentRuntimeErrorRecords}
               close={this.dismissRuntimeErrors}
               editorHandler={editorHandler}
             />
