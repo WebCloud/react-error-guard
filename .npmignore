@@ -20,3 +20,4 @@ yarn-error.log
 Jenkinsfile
 .editorconfig
 jenkins-agent
+.DS_Store
