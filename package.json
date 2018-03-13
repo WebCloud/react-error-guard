@@ -25,9 +25,6 @@
     "warning"
   ],
   "author": "Vinicius <dev.webx@gmail.com>",
-  "files": [
-    "lib/index.js"
-  ],
   "devDependencies": {
     "@babel/code-frame": "7.0.0-beta.38",
     "@babel/core": "7.0.0-beta.38",
