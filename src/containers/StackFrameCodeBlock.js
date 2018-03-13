@@ -13,7 +13,7 @@ import {absolutifyCaret} from '../utils/dom/absolutifyCaret';
 import {primaryErrorStyle, secondaryErrorStyle} from '../styles';
 import generateAnsiHTML from '../utils/generateAnsiHTML';
 
-import {codeFrameColumns} from '@babel/code-frame';
+import codeFrameColumns from '../utils/code-frame';
 
 function StackFrameCodeBlock(props) {
   const {lines, lineNum, columnNum, contextSize, main} = props;
