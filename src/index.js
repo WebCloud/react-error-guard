@@ -78,8 +78,10 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
     const {currentRuntimeErrorRecords, currentBuildError} = this.state;
 
     if (
-      process.env.NODE_ENV !== 'production' &&
-      (currentBuildError || currentRuntimeErrorRecords.length > 0)
+      // TODO: Add this later
+      // process.env.NODE_ENV !== 'production' &&
+      currentBuildError ||
+      currentRuntimeErrorRecords.length > 0
     ) {
       if (currentBuildError) {
         return (
