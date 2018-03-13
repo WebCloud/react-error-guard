@@ -55,7 +55,7 @@ function StackFrameCodeBlock(props) {
       },
     },
     {
-      forceColor: true,
+      forceColor: false,
       linesAbove: contextSize,
       linesBelow: contextSize,
     }
