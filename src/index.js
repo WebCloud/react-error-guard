@@ -3,11 +3,15 @@ import React from 'react';
 import {overlayStyle, iframeStyle} from './styles';
 import getStackFrames from './utils/getStackFrames';
 
+import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 let editorHandler = null;
 
 function setEditorHandler(handler) {
   editorHandler = handler;
+  // if (iframe) {
+  //   update();
+  // }
 }
 
 function handleRuntimeError(errorRecord) {
@@ -69,22 +73,35 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   }
 
   render() {
-    const {currentRuntimeErrorRecords} = this.state;
+    const {currentRuntimeErrorRecords, currentBuildError} = this.state;
 
     if (
       // TODO: Add this later
       // process.env.NODE_ENV !== 'production' &&
+      currentBuildError ||
       currentRuntimeErrorRecords.length > 0
     ) {
-      return (
-        <OuterWrapper>
-          <RuntimeErrorContainer
-            errorRecords={currentRuntimeErrorRecords}
-            close={this.dismissRuntimeErrors}
-            editorHandler={editorHandler}
-          />
-        </OuterWrapper>
-      );
+      if (currentBuildError) {
+        return (
+          <OuterWrapper>
+            <CompileErrorContainer
+              error={currentBuildError}
+              editorHandler={editorHandler}
+            />
+          </OuterWrapper>
+        );
+      }
+      if (currentRuntimeErrorRecords.length > 0) {
+        return (
+          <OuterWrapper>
+            <RuntimeErrorContainer
+              errorRecords={currentRuntimeErrorRecords}
+              close={this.dismissRuntimeErrors}
+              editorHandler={editorHandler}
+            />
+          </OuterWrapper>
+        );
+      }
     }
 
     return this.props.children;
