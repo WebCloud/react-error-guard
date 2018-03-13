@@ -7,7 +7,7 @@
   "scripts": {
     "prettier": "node scripts/prettier",
     "prettier:all": "node scripts/prettier write",
-    "webpack": "NODE_ENV=production BABEL_ENV=production node_modules/.bin/webpack --mode production --config webpack.config.js",
+    "webpack": "NODE_ENV=production BABEL_ENV=production node_modules/.bin/webpack --mode development --config webpack.config.js",
     "babel": "NODE_ENV=production BABEL_ENV=production babel src/ --copy-files --out-dir lib/ --ignore '.*(spec).js'",
     "build": "rimraf lib/* && yarn webpack",
     "prepublishOnly": "yarn prettier && yarn build"
@@ -29,10 +29,8 @@
   "author": "Vinicius <dev.webx@gmail.com>",
   "dependencies": {
     "anser": "1.4.6",
-    "babel-preset-env": "^1.6.1",
     "html-entities": "1.2.1",
-    "settle-promise": "1.0.0",
-    "uglifyjs-webpack-plugin": "^1.2.3"
+    "settle-promise": "1.0.0"
   },
   "devDependencies": {
     "@babel/code-frame": "7.0.0-beta.38",
@@ -65,6 +63,7 @@
     "react-dom": "^16.0.0",
     "rimraf": "^2.6.1",
     "source-map": "0.5.6",
+    "uglifyjs-webpack-plugin": "^1.2.3",
     "webpack": "^4.1.1",
     "webpack-cli": "^2.0.11"
   }

@@ -16,8 +16,6 @@ module.exports = {
 
   output: {
     filename: 'index.js',
-    library: 'react-error-guard',
-    libraryTarget: 'umd',
     path: path.resolve(__dirname, 'lib/'),
   },
 
