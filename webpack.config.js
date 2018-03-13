@@ -15,6 +15,7 @@ module.exports = {
   entry: './src/index',
 
   output: {
+    filename: 'index.js',
     library: 'react-error-guard',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'lib/'),
@@ -26,10 +27,6 @@ module.exports = {
         test: /\.js?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
-
-        options: {
-          presets: ['env'],
-        },
       },
     ],
   },
