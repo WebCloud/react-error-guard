@@ -1,6 +1,6 @@
 {
   "name": "react-error-guard",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "main": "lib/index.js",
   "license": "MIT",
   "description": "An overlay for displaying stack frames based on create-react-app/packages/react-error-overlay",
