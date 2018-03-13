@@ -21,18 +21,14 @@ class RuntimeErrorContainer extends PureComponent {
   previous = () => {
     this.setState((state, props) => ({
       currentIndex:
-        state.currentIndex > 0
-          ? state.currentIndex - 1
-          : props.errorRecords.length - 1,
+        state.currentIndex > 0 ? state.currentIndex - 1 : props.errorRecords.length - 1,
     }));
   };
 
   next = () => {
     this.setState((state, props) => ({
       currentIndex:
-        state.currentIndex < props.errorRecords.length - 1
-          ? state.currentIndex + 1
-          : 0,
+        state.currentIndex < props.errorRecords.length - 1 ? state.currentIndex + 1 : 0,
     }));
   };
 

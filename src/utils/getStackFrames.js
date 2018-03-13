@@ -14,11 +14,7 @@ function getStackFrames(error, unhandledRejection = false, contextSize = 3) {
   let enhancedFramesPromise;
 
   if (error.__unmap_source) {
-    enhancedFramesPromise = unmap(
-      error.__unmap_source,
-      parsedFrames,
-      contextSize
-    );
+    enhancedFramesPromise = unmap(error.__unmap_source, parsedFrames, contextSize);
   } else {
     enhancedFramesPromise = map(parsedFrames, contextSize);
   }
@@ -30,8 +26,7 @@ function getStackFrames(error, unhandledRejection = false, contextSize = 3) {
       if (
         enhancedFrames
           .map(f => f._originalFileName)
-          .filter(f => f != null && f.indexOf('node_modules') === -1).length ===
-        0
+          .filter(f => f != null && f.indexOf('node_modules') === -1).length === 0
       ) {
         return null;
       }

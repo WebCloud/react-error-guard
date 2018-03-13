@@ -31,8 +31,7 @@ class StackTrace extends Component {
       const {fileName, _originalFileName: sourceFileName} = frame;
       const isInternalUrl = isInternalFile(sourceFileName, fileName);
       const isThrownIntentionally = !isBultinErrorName(errorName);
-      const shouldCollapse =
-        isInternalUrl && (isThrownIntentionally || hasReachedAppCode);
+      const shouldCollapse = isInternalUrl && (isThrownIntentionally || hasReachedAppCode);
 
       if (!isInternalUrl) {
         hasReachedAppCode = true;
@@ -60,9 +59,7 @@ class StackTrace extends Component {
         } else if (currentBundle.length > 1) {
           bundleCount++;
           renderedFrames.push(
-            <Collapsible key={'bundle-' + bundleCount}>
-              {currentBundle}
-            </Collapsible>
+            <Collapsible key={'bundle-' + bundleCount}>{currentBundle}</Collapsible>
           );
         }
         currentBundle = [];

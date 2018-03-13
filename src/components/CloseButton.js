@@ -22,10 +22,7 @@ const closeButtonStyle = {
 
 function CloseButton({close}) {
   return (
-    <span
-      title="Click or press Escape to dismiss."
-      onClick={close}
-      style={closeButtonStyle}>
+    <span title="Click or press Escape to dismiss." onClick={close} style={closeButtonStyle}>
       ×
     </span>
   );

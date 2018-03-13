@@ -51,18 +51,14 @@ class Collapsible extends Component {
       <div>
         <button
           onClick={this.toggleCollaped}
-          style={
-            collapsed ? collapsibleCollapsedStyle : collapsibleExpandedStyle
-          }>
+          style={collapsed ? collapsibleCollapsedStyle : collapsibleExpandedStyle}>
           {(collapsed ? '▶' : '▼') +
             ` ${count} stack frames were ` +
             (collapsed ? 'collapsed.' : 'expanded.')}
         </button>
         <div style={{display: collapsed ? 'none' : 'block'}}>
           {this.props.children}
-          <button
-            onClick={this.toggleCollaped}
-            style={collapsibleExpandedStyle}>
+          <button onClick={this.toggleCollaped} style={collapsibleExpandedStyle}>
             {`▲ ${count} stack frames were expanded.`}
           </button>
         </div>

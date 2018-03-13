@@ -24,11 +24,7 @@ class SourceMap {
    * @param {number} column The column of the generated code position.
    */
   getOriginalPosition(line, column) {
-    const {
-      line: l,
-      column: c,
-      source: s,
-    } = this.__source_map.originalPositionFor({
+    const {line: l, column: c, source: s} = this.__source_map.originalPositionFor({
       line,
       column,
     });
@@ -93,9 +89,7 @@ async function getSourceMap(fileUri, fileContents) {
     const base64 = /^data:application\/json;([\w=:"-]+;)*base64,/;
     const match2 = sm.match(base64);
     if (!match2) {
-      throw new Error(
-        'Sorry, non-base64 inline source-map encoding is not supported.'
-      );
+      throw new Error('Sorry, non-base64 inline source-map encoding is not supported.');
     }
     sm = sm.substring(match2[0].length);
     sm = window.atob(sm);

@@ -53,10 +53,7 @@ class StackFrame extends Component {
   };
 
   getErrorLocation() {
-    const {
-      _originalFileName: fileName,
-      _originalLineNumber: lineNumber,
-    } = this.props.frame;
+    const {_originalFileName: fileName, _originalLineNumber: lineNumber} = this.props.frame;
     // Unknown file
     if (!fileName) {
       return null;
@@ -111,12 +108,7 @@ class StackFrame extends Component {
 
     let codeBlockProps = null;
     if (showCode) {
-      if (
-        compiled &&
-        scriptLines &&
-        scriptLines.length !== 0 &&
-        lineNumber != null
-      ) {
+      if (compiled && scriptLines && scriptLines.length !== 0 && lineNumber != null) {
         codeBlockProps = {
           lines: scriptLines,
           lineNum: lineNumber,

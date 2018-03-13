@@ -13,9 +13,7 @@ function setEditorHandler(handler) {
 function handleRuntimeError(errorRecord) {
   let {currentRuntimeErrorRecords} = this.state;
 
-  if (
-    currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)
-  ) {
+  if (currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)) {
     // Deduplicate identical errors.
     // This fixes https://github.com/facebook/create-react-app/issues/3011.
     return;
