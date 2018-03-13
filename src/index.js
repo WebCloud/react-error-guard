@@ -3,23 +3,17 @@ import React from 'react';
 import {overlayStyle, iframeStyle} from './styles';
 import getStackFrames from './utils/getStackFrames';
 
-import CompileErrorContainer from './containers/CompileErrorContainer';
 import RuntimeErrorContainer from './containers/RuntimeErrorContainer';
 let editorHandler = null;
 
 function setEditorHandler(handler) {
   editorHandler = handler;
-  // if (iframe) {
-  //   update();
-  // }
 }
 
 function handleRuntimeError(errorRecord) {
   let {currentRuntimeErrorRecords} = this.state;
 
-  if (
-    currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)
-  ) {
+  if (currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)) {
     // Deduplicate identical errors.
     // This fixes https://github.com/facebook/create-react-app/issues/3011.
     return;
@@ -75,35 +69,22 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   }
 
   render() {
-    const {currentRuntimeErrorRecords, currentBuildError} = this.state;
+    const {currentRuntimeErrorRecords} = this.state;
 
     if (
       // TODO: Add this later
       // process.env.NODE_ENV !== 'production' &&
-      currentBuildError ||
       currentRuntimeErrorRecords.length > 0
     ) {
-      if (currentBuildError) {
-        return (
-          <OuterWrapper>
-            <CompileErrorContainer
-              error={currentBuildError}
-              editorHandler={editorHandler}
-            />
-          </OuterWrapper>
-        );
-      }
-      if (currentRuntimeErrorRecords.length > 0) {
-        return (
-          <OuterWrapper>
-            <RuntimeErrorContainer
-              errorRecords={currentRuntimeErrorRecords}
-              close={this.dismissRuntimeErrors}
-              editorHandler={editorHandler}
-            />
-          </OuterWrapper>
-        );
-      }
+      return (
+        <OuterWrapper>
+          <RuntimeErrorContainer
+            errorRecords={currentRuntimeErrorRecords}
+            close={this.dismissRuntimeErrors}
+            editorHandler={editorHandler}
+          />
+        </OuterWrapper>
+      );
     }
 
     return this.props.children;

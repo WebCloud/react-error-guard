@@ -48,10 +48,7 @@ function StackFrameCodeBlock(props) {
     {
       start: {
         line: lineNum,
-        column:
-          columnNum == null
-            ? 0
-            : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
+        column: columnNum == null ? 0 : columnNum - (isFinite(whiteSpace) ? whiteSpace : 0),
       },
     },
     {

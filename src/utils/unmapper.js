@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/*       */
 import StackFrame from './stack-frame';
 import {getSourceMap} from './getSourceMap';
 import {getLinesAround} from './getLinesAround';
@@ -15,6 +14,7 @@ function count(search, string) {
   // Count starts at -1 becuse a do-while loop always runs at least once
   let count = -1,
     index = -1;
+
   do {
     // First call or the while case evaluated true, meaning we have to make
     // count 0 or we found a character
@@ -22,6 +22,7 @@ function count(search, string) {
     // Find the index of our search string, starting after the previous index
     index = string.indexOf(search, index + 1);
   } while (index !== -1);
+
   return count;
 }
 
@@ -34,16 +35,22 @@ function count(search, string) {
 async function unmap(_fileUri, frames, contextLines = 3) {
   let fileContents = typeof _fileUri === 'object' ? _fileUri.contents : null;
   let fileUri = typeof _fileUri === 'object' ? _fileUri.uri : _fileUri;
+
   if (fileContents == null) {
     fileContents = await fetch(fileUri).then(res => res.text());
   }
+
   const map = await getSourceMap(fileUri, fileContents);
+
   return frames.map(frame => {
     const {functionName, lineNumber, columnNumber, _originalLineNumber} = frame;
+
     if (_originalLineNumber != null) {
       return frame;
     }
+
     let {fileName} = frame;
+
     if (fileName) {
       // The web version of this module only provides POSIX support, so Windows
       // paths like C:\foo\\baz\..\\bar\ cannot be normalized.
@@ -51,10 +58,13 @@ async function unmap(_fileUri, frames, contextLines = 3) {
       // normalize afterwards.
       fileName = path.normalize(fileName.replace(/[\\]+/g, '/'));
     }
+
     if (fileName == null) {
       return frame;
     }
+
     const fN = fileName;
+
     const source = map
       .getSources()
       // Prepare path for normalization; see comment above for reasoning.
@@ -62,6 +72,7 @@ async function unmap(_fileUri, frames, contextLines = 3) {
       .filter(p => {
         p = path.normalize(p);
         const i = p.lastIndexOf(fN);
+
         return i !== -1 && i === p.length - fN.length;
       })
       .map(p => ({
@@ -71,11 +82,14 @@ async function unmap(_fileUri, frames, contextLines = 3) {
       }))
       .sort((a, b) => {
         const s = Math.sign(a.seps - b.seps);
+
         if (s !== 0) {
           return s;
         }
+
         return Math.sign(a.penalties - b.penalties);
       });
+
     if (source.length < 1 || lineNumber == null) {
       return new StackFrame(
         null,
@@ -90,13 +104,11 @@ async function unmap(_fileUri, frames, contextLines = 3) {
         null
       );
     }
+
     const sourceT = source[0].token;
-    const {line, column} = map.getGeneratedPosition(
-      sourceT,
-      lineNumber,
-      columnNumber
-    );
+    const {line, column} = map.getGeneratedPosition(sourceT, lineNumber, columnNumber);
     const originalSource = map.getSource(sourceT);
+
     return new StackFrame(
       functionName,
       fileUri,

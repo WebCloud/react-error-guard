@@ -18,9 +18,7 @@ function getPrettyURL(
   let prettyURL;
   if (!compiled && sourceFileName && typeof sourceLineNumber === 'number') {
     // Remove everything up to the first /src/ or /node_modules/
-    const trimMatch = /^[/|\\].*?[/|\\]((src|node_modules)[/|\\].*)/.exec(
-      sourceFileName
-    );
+    const trimMatch = /^[/|\\].*?[/|\\]((src|node_modules)[/|\\].*)/.exec(sourceFileName);
     if (trimMatch && trimMatch[1]) {
       prettyURL = trimMatch[1];
     } else {
