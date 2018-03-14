@@ -1,9 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
 import React from 'react';
 import {black} from '../styles';
 
@@ -11,18 +5,22 @@ const closeButtonStyle = {
   color: black,
   lineHeight: '1rem',
   fontSize: '1.5rem',
-  padding: '1rem',
+  margin: '1rem',
   cursor: 'pointer',
   position: 'absolute',
   right: 0,
   top: 0,
+  zIndex: 2147483647, // ensure always on top
 };
 
-function CloseButton({close}) {
+function CloseButton({close, closeIcon}) {
   return (
-    <span title="Click or press Escape to dismiss." onClick={close} style={closeButtonStyle}>
-      ×
-    </span>
+    <a title="Click or press Escape to dismiss." onClick={close} style={closeButtonStyle}>
+      {closeIcon
+        ? closeIcon
+        : '×'
+      }
+    </a>
   );
 }
 
