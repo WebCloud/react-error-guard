@@ -24,10 +24,12 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   };
 
   componentDidCatch(error, info) {
-    this.props.dispatchErrorReporting({
-      error,
-      info
-    });
+    if (this.props.dispatchErrorReporting) {
+      this.props.dispatchErrorReporting({
+        error,
+        info
+      });
+    }
 
     this.setState({
       showErrorMessage: true
