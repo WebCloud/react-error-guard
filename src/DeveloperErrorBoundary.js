@@ -10,28 +10,6 @@ function setEditorHandler(handler) {
   editorHandler = handler;
 }
 
-function handleRuntimeError(errorRecord) {
-  let {currentRuntimeErrorRecords} = this.state;
-
-  if (currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)) {
-    // Deduplicate identical errors.
-    // This fixes https://github.com/facebook/create-react-app/issues/3011.
-    return;
-  }
-
-  currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
-
-  this.setState({
-    currentRuntimeErrorRecords,
-  });
-}
-
-function dismissRuntimeErrors() {
-  this.setState({
-    currentRuntimeErrorRecords: [],
-  });
-}
-
 const OuterWrapper = ({children}) => (
   <div style={iframeStyle}>
     <div style={overlayStyle}>{children}</div>
@@ -39,15 +17,31 @@ const OuterWrapper = ({children}) => (
 );
 
 export default class ErrorBoundaryComponent extends React.PureComponent {
-  constructor(...args) {
-    super(...args);
+  state = {
+    currentRuntimeErrorRecords: [],
+  };
 
-    this.state = {
+  dismissRuntimeErrors = () => {
+    this.setState({
       currentRuntimeErrorRecords: [],
-    };
+    });
+  };
 
-    this.handleRuntimeError = handleRuntimeError.bind(this);
-  }
+  handleRuntimeError = errorRecord => {
+    let {currentRuntimeErrorRecords} = this.state;
+
+    if (currentRuntimeErrorRecords.some(({error}) => error === errorRecord.error)) {
+      // Deduplicate identical errors.
+      // This fixes https://github.com/facebook/create-react-app/issues/3011.
+      return;
+    }
+
+    currentRuntimeErrorRecords = currentRuntimeErrorRecords.concat([errorRecord]);
+
+    this.setState({
+      currentRuntimeErrorRecords,
+    });
+  };
 
   componentDidCatch(error, info) {
     getStackFrames(error, false, 3)
