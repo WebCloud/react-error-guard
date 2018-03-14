@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/*       */
-
 function stripInlineStacktrace(message) {
   return message
     .split('\n')

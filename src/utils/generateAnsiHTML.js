@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/*       */
-
 import Anser from 'anser';
 import {AllHtmlEntities as Entities} from 'html-entities';
 
