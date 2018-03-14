@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-/*       */
-
 /** A container holding a script line. */
 class ScriptLine {
   /** The line number of this line of source. */

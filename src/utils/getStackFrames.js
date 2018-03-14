@@ -1,10 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {parse} from './parser';
 import {map} from './mapper';
 import {unmap} from './unmapper';
@@ -20,9 +13,9 @@ function getStackFrames(error, unhandledRejection = false, contextSize = 3) {
   }
 
   return enhancedFramesPromise.then(enhancedFrames => {
-    const isProduction = process.env.NODE_ENV !== 'production';
+    const isDevelopment = process.env.NODE_ENV !== 'production';
 
-    if (isProduction) {
+    if (isDevelopment) {
       if (
         enhancedFrames
           .map(f => f._originalFileName)

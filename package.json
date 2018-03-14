@@ -1,6 +1,6 @@
 {
   "name": "react-error-guard",
-  "version": "0.2.2",
+  "version": "0.3.0",
   "main": "lib/index.js",
   "license": "MIT",
   "description": "An overlay for displaying stack frames based on create-react-app/packages/react-error-overlay",
@@ -17,19 +17,16 @@
     "url": "https://github.com/WebCloud/react-error-reporter/issues"
   },
   "keywords": [
-    "overlay",
+    "react",
     "syntax",
     "error",
-    "red",
-    "box",
-    "redbox",
     "crash",
-    "warning"
+    "warning",
+    "monitoring"
   ],
   "author": "Vinicius <dev.webx@gmail.com>",
   "dependencies": {
     "anser": "1.4.6",
-    "flow-remove-types": "^1.2.3",
     "html-entities": "1.2.1",
     "settle-promise": "1.0.0"
   },
