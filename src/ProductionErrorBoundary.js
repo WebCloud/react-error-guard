@@ -3,6 +3,7 @@ import React from 'react';
 import ErrorOverlay from './components/ErrorOverlay';
 import CloseButton from './components/CloseButton';
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 export default class ErrorBoundaryComponent extends React.PureComponent {
   state = {
@@ -50,9 +51,12 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
         : (
           <ErrorOverlay shortcutHandler={this.shortcutHandler}>
             <CloseButton close={this.close} />
-            <Header headerText="We're sorry — something's gone wrong." />
+            <Header headerText="We're sorry, something has gone wrong." />
             <p>An automated report has been sent to our team.</p>
-            <p>You can dismiss this error message by clicking on the close icon above or try again and reload the page</p>
+            <Footer
+              line1="You can dismiss this error message by clicking on the close icon above or pressing the Escape key."
+              line2="If this error reocurs you can try reloading the page."
+            />
           </ErrorOverlay>
         )
       );
