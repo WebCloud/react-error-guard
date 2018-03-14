@@ -53,7 +53,7 @@ class RuntimeErrorContainer extends PureComponent {
           editorHandler={this.props.editorHandler}
         />
         <Footer
-          line1="This screen is visible only in development. It will not appear if the app crashes in production."
+          line1="This screen should be used only in development. Ensure you are consumming the ProductionErrorBoundary component on production."
           line2="Open your browser’s developer console to further inspect this error."
         />
       </ErrorOverlay>
