@@ -39,21 +39,24 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
 
   render() {
     const {showErrorMessage} = this.state;
-    const {errorMessageComponent} = this.props;
+    const {errorMessageComponent, closeIcon} = this.props;
 
     if (showErrorMessage) {
       return ( errorMessageComponent
         ? (
           <ErrorOverlay shortcutHandler={this.shortcutHandler}>
-            <CloseButton close={this.close} />
             {errorMessageComponent}
+            <CloseButton close={this.close} closeIcon={closeIcon} />
           </ErrorOverlay>
-        )
+        ) // ensure the CloseButton will be place on the top of whatever we get as errorMessageComponent
         : (
           <ErrorOverlay shortcutHandler={this.shortcutHandler}>
-            <CloseButton close={this.close} />
+            <CloseButton close={this.close} closeIcon={closeIcon} />
             <Header headerText="We're sorry, something has gone wrong." />
-            <p>An automated report has been sent to our team.</p>
+            {this.props.dispatchErrorReporting
+              ? <p>An automated report has been sent to our team.</p>
+              : null
+            }
             <Footer
               line1="You can dismiss this error message by clicking on the close icon above or pressing the Escape key."
               line2="If this error reocurs you can try reloading the page."
