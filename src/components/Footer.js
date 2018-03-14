@@ -12,7 +12,7 @@ function Footer(props) {
   return (
     <div style={footerStyle}>
       {props.line1}
-      {props.line2 && (<br />)}
+      {props.line2 && <br />}
       {props.line2 || null}
     </div>
   );

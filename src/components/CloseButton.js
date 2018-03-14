@@ -16,10 +16,7 @@ const closeButtonStyle = {
 function CloseButton({close, closeIcon}) {
   return (
     <a title="Click or press Escape to dismiss." onClick={close} style={closeButtonStyle}>
-      {closeIcon
-        ? closeIcon
-        : '×'
-      }
+      {closeIcon ? closeIcon : '×'}
     </a>
   );
 }
