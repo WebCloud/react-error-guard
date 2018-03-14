@@ -1,11 +1,3 @@
-/**
- * Copyright (c) 2015-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-/*       */
 import React, {Component} from 'react';
 import {black} from '../styles';
 
@@ -30,12 +22,12 @@ const overlayStyle = {
 };
 
 class ErrorOverlay extends Component {
-  iframeWindow = null;
+  frameWindow = null;
 
   getIframeWindow = element => {
     if (element) {
       const document = element.ownerDocument;
-      this.iframeWindow = document.defaultView;
+      this.frameWindow = document.defaultView;
     }
   };
 
@@ -47,16 +39,14 @@ class ErrorOverlay extends Component {
   };
 
   componentDidMount() {
-    window.addEventListener('keydown', this.onKeyDown);
-    if (this.iframeWindow) {
-      this.iframeWindow.addEventListener('keydown', this.onKeyDown);
+    if (this.props.shortcutHandler) {
+      this.frameWindow.addEventListener('keydown', this.onKeyDown);
     }
   }
 
   componentWillUnmount() {
-    window.removeEventListener('keydown', this.onKeyDown);
-    if (this.iframeWindow) {
-      this.iframeWindow.removeEventListener('keydown', this.onKeyDown);
+    if (this.props.shortcutHandler) {
+      this.frameWindow.removeEventListener('keydown', this.onKeyDown);
     }
   }
 
