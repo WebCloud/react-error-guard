@@ -38,7 +38,8 @@ export default class ErrorBoundaryComponent extends React.PureComponent {
   }
 
   render() {
-    const {showErrorMessage, errorMessageComponent} = this.state;
+    const {showErrorMessage} = this.state;
+    const {errorMessageComponent} = this.props;
 
     if (showErrorMessage) {
       return ( errorMessageComponent
