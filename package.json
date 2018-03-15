@@ -12,9 +12,9 @@
     "build": "rimraf lib/* && yarn babel",
     "prepublishOnly": "yarn prettier && yarn build"
   },
-  "repository": "WebCloud/react-error-reporter",
+  "repository": "WebCloud/react-error-guard",
   "bugs": {
-    "url": "https://github.com/WebCloud/react-error-reporter/issues"
+    "url": "https://github.com/WebCloud/react-error-guard/issues"
   },
   "keywords": [
     "react",
