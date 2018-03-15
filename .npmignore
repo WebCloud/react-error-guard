@@ -4,6 +4,7 @@ hooks/
 scripts/
 .storybook/
 stories/
+static/
 test/
 storybook-static/
 karma.conf.js
