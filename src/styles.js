@@ -12,14 +12,14 @@ const iframeStyle = {
   top: '0',
   left: '0',
   width: '100%',
-  height: '100%',
+  height: 'auto',
   border: 'none',
   zIndex: 2147483647,
 };
 
 const overlayStyle = {
   width: '100%',
-  height: '100%',
+  height: 'auto',
   boxSizing: 'border-box',
   textAlign: 'center',
   backgroundColor: white,
