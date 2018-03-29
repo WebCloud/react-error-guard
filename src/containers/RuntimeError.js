@@ -5,6 +5,7 @@ import StackTrace from './StackTrace';
 const wrapperStyle = {
   display: 'flex',
   flexDirection: 'column',
+  width: '100%',
 };
 
 function RuntimeError({errorRecord, editorHandler}) {
